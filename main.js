@@ -51,6 +51,21 @@ const movePiece = (startStack, endStack) => {
   stacks[endStack].push(stacks[startStack].pop());
 }
 
+//this is a new function i created to prevent the code from crashing in the terminal if you enter an input that isnt allowed as the start or end stack
+const preventCrash = (startStack, endStack) => {
+  if (startStack === "a" && (endStack === "b" || endStack === "c")){
+    return true;
+  }
+  else if (startStack === "b" && (endStack === "a" || endStack === "c")){
+    return true;
+  }
+  else if (startStack === "c" && (endStack === "a" || endStack === "b")){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
 /*this function should check that the desired move of a token is legal
 if the token is moving from one stack to another the new stack must be empty or 
@@ -60,35 +75,26 @@ is not allowed
  */
 const isLegal = (startStack, endStack) => {
   // Your code here
-
-  //making sure player enters valid move
-  if (startStack === '' || endStack === '') {
-    return false;
-    }
-    if (stacks[startStack] === undefined) {
-      return false;
-    }
-    if (stacks[endStack] === undefined) {
-      return false;
-    }
+  if (preventCrash(startStack, endStack)){
   //new variables for last token in startStack(the one that will be moving)
   //and last token in endStack(the one that the token will be moving to, might be empty)  
-  let movingToken = stacks[startStack].length-1;
-  let newTowerToken = stacks[endStack].length-1;
+  let movingToken = stacks[startStack][stacks[startStack].length-1];
+  let newTowerToken = stacks[endStack][stacks[endStack].length -1];
 
-  const startStackTower = ["a", "b", "c"];
   
   //startStackTower is an array that holds the possible values of where the token will be moving from
   // this for loop will return true if the movingToken is smaller than the token at the new tower
   //or if the new tower is empty.  Otherwise it will return false and isLegal will not be true
-  for(let i=0; i<startStackTower.length; i++){
     if (movingToken < newTowerToken || stacks[endStack].length === 0){
+      console.log('legal move');
       return true;
     }
     else{
+      console.log('illegal move');
       return false;
     }
-  }
+  
+}
 }
 
 // What is a win in Towers of Hanoi? When should this function run?
@@ -112,30 +118,17 @@ const checkForWin = () => {
 // When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
-  startStack = startStack.trim().toLowerCase();
-  endStack = endStack.trim().toLowerCase();
-  let legalMove = isLegal(startStack, endStack);
-  let winCheck = checkForWin();
-  if(legalMove = true){
-    movePiece(startStack, endStack)
+  if (isLegal(startStack, endStack)) {
+    movePiece(startStack, endStack);
+    checkForWin();
   }
-    //if the move is not legal tell them
-    else {
-      console.log('ILLEGAL MOVE');
-    }
+  else{
+    console.log ('not a legal move');
+  }
   if (checkForWin()) {
-    //if player won give a message and reset the stacks
-        console.log("You WIN!!!");
-        console.log(stacks);
-        stacks = {
-          a: [4, 3, 2, 1],
-          b: [],
-          c: []
-        };
-      }
-      else{
-        console.log(stacks);
-      }
+    console.log('congratulations! you won!');
+    console.log(stacks);
+  }
 }
 
 const getPrompt = () => {
@@ -191,3 +184,31 @@ if (typeof describe === 'function') {
   getPrompt();
 
 }
+
+
+/*
+startStack = startStack.trim().toLowerCase();
+  endStack = endStack.trim().toLowerCase();
+  let legalMove = isLegal(startStack, endStack);
+  if(legalMove = true){
+    movePiece(startStack, endStack)
+    console.log(legalMove);
+  }
+    else {
+      console.log('ILLEGAL MOVE');
+    }
+  if (checkForWin()) {
+    
+        console.log("You WIN!!!");
+        console.log(stacks);
+        stacks = {
+          a: [4, 3, 2, 1],
+          b: [],
+          c: []
+        };
+      }
+      else{
+        console.log(stacks);
+        console.log(legalMove);
+      }
+ */
