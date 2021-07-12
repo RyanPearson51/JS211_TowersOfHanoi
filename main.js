@@ -52,6 +52,7 @@ const movePiece = (startStack, endStack) => {
 }
 
 //this is a new function i created to prevent the code from crashing in the terminal if you enter an input that isnt allowed as the start or end stack
+//this ensures that a user cant enter an invalid stack, and if they do, they just get a message telling them the move is not allowed
 const preventCrash = (startStack, endStack) => {
   if (startStack === "a" && (endStack === "b" || endStack === "c")){
     return true;
@@ -81,8 +82,6 @@ const isLegal = (startStack, endStack) => {
   let movingToken = stacks[startStack][stacks[startStack].length-1];
   let newTowerToken = stacks[endStack][stacks[endStack].length -1];
 
-  
-  //startStackTower is an array that holds the possible values of where the token will be moving from
   // this for loop will return true if the movingToken is smaller than the token at the new tower
   //or if the new tower is empty.  Otherwise it will return false and isLegal will not be true
     if (movingToken < newTowerToken || stacks[endStack].length === 0){
@@ -106,7 +105,7 @@ const checkForWin = () => {
   // Your code here
   //if stack b or stack c is equal to the win condition, then checkForWin will be true
   //can't compare two arrays, must convert them to strings like we did in class.
-  //because there is only 4 numbers we dont have to worry about the possibility of a misread, the correct outcome of 4,3,2,1 (4321) can only come up one way
+  //when converted to a string, stack b or c must equal '4321' to return a win condition
   if(stacks.b.toString() == [4, 3, 2, 1].toString() || stacks.c.toString() == [4, 3, 2, 1].toString()){
     return true;
   }
@@ -118,7 +117,10 @@ const checkForWin = () => {
 // When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
-  if (isLegal(startStack, endStack)) {
+  // if the move the user is trying to do is legal, move the piece and check to see if they have won
+  //if it is not legal, then print an alert and do not allow the user to make the move
+  //if check for win is true because a win condition has been met, print out a message congratulating the user along with a copy of the board
+  if (isLegal(startStack, endStack)) {    
     movePiece(startStack, endStack);
     checkForWin();
   }
@@ -128,6 +130,7 @@ const towersOfHanoi = (startStack, endStack) => {
   if (checkForWin()) {
     console.log('congratulations! you won!');
     console.log(stacks);
+
   }
 }
 
@@ -186,29 +189,3 @@ if (typeof describe === 'function') {
 }
 
 
-/*
-startStack = startStack.trim().toLowerCase();
-  endStack = endStack.trim().toLowerCase();
-  let legalMove = isLegal(startStack, endStack);
-  if(legalMove = true){
-    movePiece(startStack, endStack)
-    console.log(legalMove);
-  }
-    else {
-      console.log('ILLEGAL MOVE');
-    }
-  if (checkForWin()) {
-    
-        console.log("You WIN!!!");
-        console.log(stacks);
-        stacks = {
-          a: [4, 3, 2, 1],
-          b: [],
-          c: []
-        };
-      }
-      else{
-        console.log(stacks);
-        console.log(legalMove);
-      }
- */
