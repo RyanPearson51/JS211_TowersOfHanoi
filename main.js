@@ -84,7 +84,7 @@ const isLegal = (startStack, endStack) => {
 
   // this for loop will return true if the movingToken is smaller than the token at the new tower
   //or if the new tower is empty.  Otherwise it will return false and isLegal will not be true
-    if (movingToken < newTowerToken || stacks[endStack].length === 0){
+  if (movingToken < newTowerToken || stacks[endStack].length === 0){
       console.log('legal move');
       return true;
     }
@@ -130,7 +130,8 @@ const towersOfHanoi = (startStack, endStack) => {
   if (checkForWin()) {
     console.log('congratulations! you won!');
     console.log(stacks);
-
+    //code to make getPrompt() not run anymore
+    //as of now the user would just have to manually exit out and restart play for a new game
   }
 }
 
