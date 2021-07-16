@@ -84,10 +84,12 @@ const isLegal = (startStack, endStack) => {
 
   // this for loop will return true if the movingToken is smaller than the token at the new tower
   //or if the new tower is empty.  Otherwise it will return false and isLegal will not be true
+  if(stacks[startStack].length !=0){
   if (movingToken < newTowerToken || stacks[endStack].length === 0){
       console.log('legal move');
       return true;
-    }
+      
+    }}
     else{
       console.log('illegal move');
       return false;
