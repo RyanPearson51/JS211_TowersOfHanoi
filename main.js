@@ -91,7 +91,7 @@ const isLegal = (startStack, endStack) => {
       
     }}
     else{
-      console.log('illegal move');
+      
       return false;
     }
   
@@ -127,7 +127,7 @@ const towersOfHanoi = (startStack, endStack) => {
     checkForWin();
   }
   else{
-    console.log ('not a legal move');
+    console.log ('not a legal move, try again');
   }
   if (checkForWin()) {
     console.log('congratulations! you won!');
