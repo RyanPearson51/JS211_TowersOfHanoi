@@ -117,6 +117,7 @@ const checkForWin = () => {
 }
 
 // When is this function called? What should it do with its argument?
+let continueGame;
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
   // if the move the user is trying to do is legal, move the piece and check to see if they have won
@@ -132,6 +133,7 @@ const towersOfHanoi = (startStack, endStack) => {
   if (checkForWin()) {
     console.log('congratulations! you won!');
     console.log(stacks);
+    continueGame = false;
     //code to make getPrompt() not run anymore
     //as of now the user would just have to manually exit out and restart play for a new game
   }
@@ -142,6 +144,9 @@ const getPrompt = () => {
   rl.question('start stack: ', (startStack) => {
     rl.question('end stack: ', (endStack) => {
       towersOfHanoi(startStack, endStack);
+      if(continueGame == false){
+        return;
+      }
       getPrompt();
     });
   });
